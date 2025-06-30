@@ -1,0 +1,43 @@
+[project]
+name = "set-status"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "asyncio>=3.4.3",
+    "click>=8.2.1",
+    "emoji>=2.14.1",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "msal-extensions>=1.3.1",
+    "msgraph-sdk>=1.34.0",
+    "typer>=0.16.0",
+]
+keywords = [
+    "python",
+    "set-status",
+    "slack"
+]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: MacOS :: MacOS X",
+    "Intended Audience :: Developers",
+    "Environment :: Console",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/jameswalden2/set-status"
+Repository = "https://github.com/jameswalden2/set-status"
+Documentation = "https://github.com/jameswalden2/set-status/blob/main/README.md"
+
+[project.scripts]
+set-status = "set_status.main:main"
