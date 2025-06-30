@@ -41,3 +41,9 @@ Documentation = "https://github.com/jameswalden2/set-status/blob/main/README.md"
 
 [project.scripts]
 set-status = "set_status.main:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "ruff>=0.12.1",
+]
