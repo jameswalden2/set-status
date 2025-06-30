@@ -11,7 +11,6 @@ config_client = ConfigClient()
 
 
 class ProfilesClient:
-
     def __init__(self):
         Path(CONFIG_DIR).mkdir(parents=True, exist_ok=True)
         if not PROFILES_FILEPATH.exists():

@@ -60,7 +60,7 @@ class SlackClient(BaseClient):
     def __init__(self, config: dict):
         self.headers = {
             "Content-type": "application/json; charset=utf-8",
-            "Authorization": f"Bearer {config["token"]}",
+            "Authorization": f"Bearer {config['token']}",
         }
         super().__init__()
 
@@ -88,7 +88,7 @@ class MSTeamsClient(BaseClient):
     def __init__(self, config: dict):
         self.headers = {
             "Content-type": "application/json",
-            "Authorization": f"Bearer {config["token"]}",
+            "Authorization": f"Bearer {config['token']}",
         }
         self.user_id = config["user_id"].strip()
         super().__init__()
@@ -125,10 +125,7 @@ class DiscordClient: ...
 class GithubClient: ...
 
 
-class OutlookClientConfigurationException(Exception): ...
-
-
-class MsalClient:
+class OutlookClient:
     # https://github.com/AzureAD/microsoft-authentication-extensions-for-python
     scopes = ["User.Read", "MailboxSettings.ReadWrite"]
     client: GraphServiceClient
@@ -173,7 +170,7 @@ class MsalClient:
         """Build a suitable persistence instance based your current OS"""
         try:
             return build_encrypted_persistence(location)
-        except:
+        except RuntimeError:
             if not fallback_to_plaintext:
                 raise
             logger.warning("Encryption unavailable. Opting in to plain text.")
@@ -208,15 +205,3 @@ def slack_test():
     client = SlackClient(config={"token": "new_token"})
     response = asyncio.run(client.set_status(status="", emoji="🤖"))
     print(response)
-
-
-def msal_test():
-    client = MsalClient()
-
-
-def discord():
-    pass
-
-
-if __name__ == "__main__":
-    msal_test()

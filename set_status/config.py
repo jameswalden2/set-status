@@ -1,6 +1,4 @@
 import json
-import os
-import sys
 from enum import Enum
 from pathlib import Path
 
@@ -20,26 +18,26 @@ class ConfigProvider(Enum):
 
 
 class ConfigClient:
+    config_filepath: Path
 
-    def __init__(self):
-        Path(CONFIG_DIR).mkdir(parents=True, exist_ok=True)
-        if not CONFIG_FILEPATH.exists():
-            with open(CONFIG_FILEPATH, "+w") as f:
+    def __init__(self, config_dir: Path = CONFIG_DIR):
+        Path(config_dir).mkdir(parents=True, exist_ok=True)
+        self.config_filepath = config_dir / CONFIG_FILENAME
+        if not self.config_filepath.exists():
+            with open(self.config_filepath, "+w") as f:
                 json.dump({}, f, indent=4)
 
-    @staticmethod
-    def _load_config():
-        with open(CONFIG_FILEPATH) as f:
+    def _load_config(self):
+        with open(self.config_filepath) as f:
             content = json.load(f)
         return content
 
-    @staticmethod
-    def _write_config(content: dict):
-        with open(CONFIG_FILEPATH, "w") as f:
+    def _write_config(self, content: dict):
+        with open(self.config_filepath, "w") as f:
             json.dump(content, f, indent=4)
 
     def update_config(self, provider: ConfigProvider, config: dict):
-        with open(CONFIG_FILEPATH, "r") as f:
+        with open(self.config_filepath, "r") as f:
             content = json.load(f)
 
         content[provider.value] = config
@@ -61,7 +59,7 @@ class ConfigClient:
 
         logger.info(f"🚮 Removed configuration for {provider.value}")
 
-    def read_config(self, provider: ConfigProvider):
+    def read_config(self, provider: ConfigProvider) -> dict:
         content = self._load_config()
         config = content.get(provider.value)
 
